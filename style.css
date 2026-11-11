@@ -177,7 +177,6 @@ body {
   box-shadow: 0 6px 15px rgba(0, 112, 243, 0.6);
 }
 
-/* Botão de Excluir */
 .btn-delete {
   background: rgba(255, 59, 48, 0.15);
   border: 1px solid rgba(255, 59, 48, 0.4);
