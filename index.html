@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Henry Workflows | Organizador de Rotinas Henry</title>
+  <title>Henry Workflows | Organizador de Rotinas</title>
   <link rel="stylesheet" href="style.css">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -21,7 +21,7 @@
     <nav>
       <ul>
         <li><a href="#cards-container">Rotinas</a></li>
-        <li><a href="#" onclick="openModal('modal-add')">+ Nova Rotina</a></li>
+        <li><button class="btn-primary" onclick="openModal('modal-add')">+ Nova Rotina</button></li>
       </ul>
     </nav>
   </header>
@@ -36,149 +36,184 @@
   <main class="cards-container" id="cards-container">
 
     <!-- Card: Estudo -->
-    <div class="card" data-category="estudo">
+    <div class="card" id="card-estudo">
       <div class="card-icon"><i data-lucide="book-open"></i></div>
       <h3>Estudos</h3>
       <p>Desenvolvimento acadêmico, leitura e novos aprendizados.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-estudo')">Detalhes</button>
-        <a href="estudo.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-estudo')">Ver Detalhes</button>
       </div>
     </div>
 
     <!-- Card: Trabalho -->
-    <div class="card" data-category="trabalho">
+    <div class="card" id="card-trabalho">
       <div class="card-icon"><i data-lucide="briefcase"></i></div>
       <h3>Trabalho</h3>
       <p>Projetos profissionais, reuniões e metas diárias.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-trabalho')">Detalhes</button>
-        <a href="trabalho.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-trabalho')">Ver Detalhes</button>
       </div>
     </div>
 
     <!-- Card: Lazer -->
-    <div class="card" data-category="lazer">
+    <div class="card" id="card-lazer">
       <div class="card-icon"><i data-lucide="smile"></i></div>
       <h3>Lazer</h3>
       <p>Momentos de descanso, entretenimento e descompressão.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-lazer')">Detalhes</button>
-        <a href="lazer.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-lazer')">Ver Detalhes</button>
       </div>
     </div>
 
     <!-- Card: Hobby -->
-    <div class="card" data-category="hobby">
+    <div class="card" id="card-hobby">
       <div class="card-icon"><i data-lucide="gamepad-2"></i></div>
       <h3>Hobbies</h3>
       <p>Atividades criativas, jogos e paixões pessoais.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-hobby')">Detalhes</button>
-        <a href="hobby.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-hobby')">Ver Detalhes</button>
       </div>
     </div>
 
     <!-- Card: Esportes -->
-    <div class="card" data-category="esportes">
-      <div class="card-icon"><i data-lucide="dumbell"></i></div>
+    <div class="card" id="card-esportes">
+      <div class="card-icon"><i data-lucide="dumbbell"></i></div>
       <h3>Esportes</h3>
       <p>Treinos físicos, alta performance e rotina de exercícios.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-esportes')">Detalhes</button>
-        <a href="esportes.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-esportes')">Ver Detalhes</button>
       </div>
     </div>
 
     <!-- Card: Saúde -->
-    <div class="card" data-category="saude">
+    <div class="card" id="card-saude">
       <div class="card-icon"><i data-lucide="heart-pulse"></i></div>
       <h3>Saúde</h3>
       <p>Alimentação, hidratação, exames e qualidade do sono.</p>
       <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-saude')">Detalhes</button>
-        <a href="saude.html" class="btn-secondary">Acessar Página <i data-lucide="external-link"></i></a>
+        <button class="btn-primary" onclick="openModal('modal-saude')">Ver Detalhes</button>
       </div>
     </div>
 
   </main>
 
-  <!-- Modais de Detalhes -->
-  <div id="modal-estudo" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-estudo')">&times;</span>
-      <h2><i data-lucide="book-open"></i> Rotina de Estudos</h2>
-      <hr>
-      <ul>
-        <li>📖 Leitura técnica (30 min)</li>
-        <li>💻 Prática de programação (1h30)</li>
-        <li>📝 Revisão de anotações diárias</li>
-      </ul>
+  <!-- Container Dinâmico de Modais -->
+  <div id="modals-wrapper">
+    <!-- Modal: Nova Rotina -->
+    <div id="modal-add" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-add')">&times;</span>
+        <h2><i data-lucide="plus-circle"></i> Criar Nova Rotina</h2>
+        <hr>
+        <form id="form-new-routine" onsubmit="createNewRoutine(event)">
+          <div class="form-group">
+            <label for="routine-title">Nome da Rotina:</label>
+            <input type="text" id="routine-title" placeholder="Ex: Meditação, Projetos..." required>
+          </div>
+          <div class="form-group">
+            <label for="routine-icon">Ícone / Categoria:</label>
+            <select id="routine-icon">
+              <option value="sparkles">✨ Geral / Especial</option>
+              <option value="book-open">📚 Estudos</option>
+              <option value="briefcase">💼 Trabalho</option>
+              <option value="smile">😊 Lazer</option>
+              <option value="gamepad-2">🎮 Hobbies</option>
+              <option value="dumbbell">🏋️ Esportes</option>
+              <option value="heart-pulse">❤️ Saúde</option>
+              <option value="coffee">☕ Manhã / Foco</option>
+              <option value="moon">🌙 Noite / Sono</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="routine-desc">Descrição Curta:</label>
+            <input type="text" id="routine-desc" placeholder="Resumo do objetivo desta rotina..." required>
+          </div>
+          <div class="form-group">
+            <label for="routine-items">Hábitos / Tarefas (separados por vírgula):</label>
+            <textarea id="routine-items" rows="3" placeholder="Ex: Beber café sem açúcar, Ler 10 páginas, 20min alongamento" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-block">Salvar Nova Rotina</button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div id="modal-trabalho" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-trabalho')">&times;</span>
-      <h2><i data-lucide="briefcase"></i> Rotina de Trabalho</h2>
-      <hr>
-      <ul>
-        <li>📧 Resposta a e-mails prioritários</li>
-        <li>🚀 Planejamento de sprints</li>
-        <li>📊 Revisão de KPIs e resultados</li>
-      </ul>
+    <!-- Modais Padrões de Detalhes -->
+    <div id="modal-estudo" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-estudo')">&times;</span>
+        <h2><i data-lucide="book-open"></i> Rotina de Estudos</h2>
+        <hr>
+        <ul>
+          <li>📖 Leitura técnica (30 min)</li>
+          <li>💻 Prática de programação (1h30)</li>
+          <li>📝 Revisão de anotações diárias</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div id="modal-lazer" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-lazer')">&times;</span>
-      <h2><i data-lucide="smile"></i> Rotina de Lazer</h2>
-      <hr>
-      <ul>
-        <li>🎬 Séries / Filmes à noite</li>
-        <li>🚶 Passeio ao ar livre</li>
-        <li>🎧 Ouvir podcasts ou música</li>
-      </ul>
+    <div id="modal-trabalho" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-trabalho')">&times;</span>
+        <h2><i data-lucide="briefcase"></i> Rotina de Trabalho</h2>
+        <hr>
+        <ul>
+          <li>📧 Resposta a e-mails prioritários</li>
+          <li>🚀 Planejamento de tarefas e projetos</li>
+          <li>📊 Revisão de KPIs e entregas</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div id="modal-hobby" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-hobby')">&times;</span>
-      <h2><i data-lucide="gamepad-2"></i> Rotina de Hobbies</h2>
-      <hr>
-      <ul>
-        <li>🎨 Projetos autorais de design</li>
-        <li>🎮 Sessão de jogos no final de semana</li>
-        <li>🎸 Prática de instrumento musical</li>
-      </ul>
+    <div id="modal-lazer" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-lazer')">&times;</span>
+        <h2><i data-lucide="smile"></i> Rotina de Lazer</h2>
+        <hr>
+        <ul>
+          <li>🎬 Séries / Filmes à noite</li>
+          <li>🚶 Passeio ao ar livre</li>
+          <li>🎧 Ouvir podcasts ou música</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div id="modal-esportes" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-esportes')">&times;</span>
-      <h2><i data-lucide="dumbell"></i> Rotina de Esportes</h2>
-      <hr>
-      <ul>
-        <li>🏋️ Musculação / Calistenia (1h)</li>
-        <li>🏃 Corrida outdoor (5km)</li>
-        <li>🧘 Alongamento e mobilidade</li>
-      </ul>
+    <div id="modal-hobby" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-hobby')">&times;</span>
+        <h2><i data-lucide="gamepad-2"></i> Rotina de Hobbies</h2>
+        <hr>
+        <ul>
+          <li>🎨 Projetos autorais de design</li>
+          <li>🎮 Sessão de jogos no final de semana</li>
+          <li>🎸 Prática de instrumento musical</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div id="modal-saude" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modal-saude')">&times;</span>
-      <h2><i data-lucide="heart-pulse"></i> Rotina de Saúde</h2>
-      <hr>
-      <ul>
-        <li>💧 Beber 3L de água por dia</li>
-        <li>🥗 Seguir plano alimentar balanceado</li>
-        <li>😴 Garantir 8 horas de sono contínuo</li>
-      </ul>
+    <div id="modal-esportes" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-esportes')">&times;</span>
+        <h2><i data-lucide="dumbbell"></i> Rotina de Esportes</h2>
+        <hr>
+        <ul>
+          <li>🏋️ Musculação / Treino de Força (1h)</li>
+          <li>🏃 Corrida ao ar livre (5km)</li>
+          <li>🧘 Alongamento e mobilidade</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="modal-saude" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modal-saude')">&times;</span>
+        <h2><i data-lucide="heart-pulse"></i> Rotina de Saúde</h2>
+        <hr>
+        <ul>
+          <li>💧 Beber 3L de água por dia</li>
+          <li>🥗 Seguir plano alimentar balanceado</li>
+          <li>😴 Garantir 8 horas de sono contínuo</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -189,19 +224,122 @@
 
     // Funções de Modal
     function openModal(id) {
-      document.getElementById(id).style.display = 'flex';
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'flex';
+      }
     }
 
     function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'none';
+      }
     }
 
-    // Fechar modal ao clicar fora do conteúdo
+    // Fechar modal ao clicar fora
     window.onclick = function(event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
       }
     };
+
+    // Criar Nova Rotina
+    function createNewRoutine(event) {
+      event.preventDefault();
+
+      const title = document.getElementById('routine-title').value.trim();
+      const icon = document.getElementById('routine-icon').value;
+      const desc = document.getElementById('routine-desc').value.trim();
+      const itemsRaw = document.getElementById('routine-items').value.trim();
+
+      if (!title || !desc || !itemsRaw) return;
+
+      const routineId = 'modal-custom-' + Date.now();
+      const itemsList = itemsRaw.split(',').map(item => item.trim()).filter(item => item.length > 0);
+
+      // Criar Novo Card HTML
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-icon"><i data-lucide="${icon}"></i></div>
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <div class="card-actions">
+          <button class="btn-primary" onclick="openModal('${routineId}')">Ver Detalhes</button>
+        </div>
+      `;
+      document.getElementById('cards-container').appendChild(card);
+
+      // Criar Novo Modal HTML
+      const modal = document.createElement('div');
+      modal.id = routineId;
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('${routineId}')">&times;</span>
+          <h2><i data-lucide="${icon}"></i> ${title}</h2>
+          <hr>
+          <ul>
+            ${itemsList.map(item => `<li>✨ ${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('modals-wrapper').appendChild(modal);
+
+      // Salvar no localStorage
+      saveCustomRoutine({ id: routineId, title, icon, desc, items: itemsList });
+
+      // Atualizar ícones renderizados
+      lucide.createIcons();
+
+      // Limpar formulário e fechar modal
+      document.getElementById('form-new-routine').reset();
+      closeModal('modal-add');
+    }
+
+    // Persistência com localStorage
+    function saveCustomRoutine(routineData) {
+      const saved = JSON.parse(localStorage.getItem('henry_routines') || '[]');
+      saved.push(routineData);
+      localStorage.setItem('henry_routines', JSON.stringify(saved));
+    }
+
+    function loadCustomRoutines() {
+      const saved = JSON.parse(localStorage.getItem('henry_routines') || '[]');
+      saved.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-icon"><i data-lucide="${r.icon}"></i></div>
+          <h3>${r.title}</h3>
+          <p>${r.desc}</p>
+          <div class="card-actions">
+            <button class="btn-primary" onclick="openModal('${r.id}')">Ver Detalhes</button>
+          </div>
+        `;
+        document.getElementById('cards-container').appendChild(card);
+
+        const modal = document.createElement('div');
+        modal.id = r.id;
+        modal.className = 'modal';
+        modal.innerHTML = `
+          <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('${r.id}')">&times;</span>
+            <h2><i data-lucide="${r.icon}"></i> ${r.title}</h2>
+            <hr>
+            <ul>
+              ${r.items.map(item => `<li>✨ ${item}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+        document.getElementById('modals-wrapper').appendChild(modal);
+      });
+      lucide.createIcons();
+    }
+
+    // Carregar rotinas personalizadas ao iniciar
+    window.addEventListener('DOMContentLoaded', loadCustomRoutines);
 
     // Script 3D com Three.js (Objetos voando no fundo)
     const scene = new THREE.Scene();
@@ -211,13 +349,12 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Adição de Objetos 3D (Formas representando lápis/livros/halteres em degradê tridimensional)
     const objects = [];
     const geometryList = [
-      new THREE.CylinderGeometry(0.1, 0.1, 2, 8), // Estilo Lápis
-      new THREE.BoxGeometry(1, 1.3, 0.3),         // Estilo Livro
-      new THREE.TorusGeometry(0.8, 0.2, 16, 100), // Estilo Anel / Halter
-      new THREE.IcosahedronGeometry(0.8)          // Objeto Geométrico Futurista
+      new THREE.CylinderGeometry(0.1, 0.1, 2, 8),
+      new THREE.BoxGeometry(1, 1.3, 0.3),
+      new THREE.TorusGeometry(0.8, 0.2, 16, 100),
+      new THREE.IcosahedronGeometry(0.8)
     ];
 
     const materialBlue = new THREE.MeshPhongMaterial({
@@ -236,7 +373,6 @@
       flatShading: true
     });
 
-    // Criar múltiplos objetos voadores aleatórios
     for (let i = 0; i < 40; i++) {
       const geom = geometryList[Math.floor(Math.random() * geometryList.length)];
       const mat = Math.random() > 0.4 ? materialBlue : materialWhite;
@@ -259,7 +395,6 @@
       objects.push(mesh);
     }
 
-    // Iluminação 3D
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
@@ -273,7 +408,6 @@
 
     camera.position.z = 15;
 
-    // Loop de Animação
     function animate() {
       requestAnimationFrame(animate);
 
@@ -287,7 +421,6 @@
     }
     animate();
 
-    // RedimensionamentoResponsivo
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
