@@ -29,72 +29,12 @@
   <!-- Hero Banner -->
   <section class="hero">
     <h1>Organize a sua vida com excelência, <span>Henry</span>.</h1>
-    <p>Gestão de Estudo, Trabalho, Lazer, Hobbies, Esportes e Saúde em um único ecossistema tridimensional.</p>
+    <p>Gestão personalizada de Estudo, Trabalho, Lazer, Hobbies, Esportes e Saúde em um único ecossistema tridimensional.</p>
   </section>
 
   <!-- Container dos Cards de Rotinas -->
   <main class="cards-container" id="cards-container">
-
-    <!-- Card: Estudo -->
-    <div class="card" id="card-estudo">
-      <div class="card-icon"><i data-lucide="book-open"></i></div>
-      <h3>Estudos</h3>
-      <p>Desenvolvimento acadêmico, leitura e novos aprendizados.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-estudo')">Ver Detalhes</button>
-      </div>
-    </div>
-
-    <!-- Card: Trabalho -->
-    <div class="card" id="card-trabalho">
-      <div class="card-icon"><i data-lucide="briefcase"></i></div>
-      <h3>Trabalho</h3>
-      <p>Projetos profissionais, reuniões e metas diárias.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-trabalho')">Ver Detalhes</button>
-      </div>
-    </div>
-
-    <!-- Card: Lazer -->
-    <div class="card" id="card-lazer">
-      <div class="card-icon"><i data-lucide="smile"></i></div>
-      <h3>Lazer</h3>
-      <p>Momentos de descanso, entretenimento e descompressão.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-lazer')">Ver Detalhes</button>
-      </div>
-    </div>
-
-    <!-- Card: Hobby -->
-    <div class="card" id="card-hobby">
-      <div class="card-icon"><i data-lucide="gamepad-2"></i></div>
-      <h3>Hobbies</h3>
-      <p>Atividades criativas, jogos e paixões pessoais.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-hobby')">Ver Detalhes</button>
-      </div>
-    </div>
-
-    <!-- Card: Esportes -->
-    <div class="card" id="card-esportes">
-      <div class="card-icon"><i data-lucide="dumbbell"></i></div>
-      <h3>Esportes</h3>
-      <p>Treinos físicos, alta performance e rotina de exercícios.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-esportes')">Ver Detalhes</button>
-      </div>
-    </div>
-
-    <!-- Card: Saúde -->
-    <div class="card" id="card-saude">
-      <div class="card-icon"><i data-lucide="heart-pulse"></i></div>
-      <h3>Saúde</h3>
-      <p>Alimentação, hidratação, exames e qualidade do sono.</p>
-      <div class="card-actions">
-        <button class="btn-primary" onclick="openModal('modal-saude')">Ver Detalhes</button>
-      </div>
-    </div>
-
+    <!-- Os cards serão carregados dinamicamente aqui -->
   </main>
 
   <!-- Container Dinâmico de Modais -->
@@ -108,18 +48,18 @@
         <form id="form-new-routine" onsubmit="createNewRoutine(event)">
           <div class="form-group">
             <label for="routine-title">Nome da Rotina:</label>
-            <input type="text" id="routine-title" placeholder="Ex: Meditação, Projetos..." required>
+            <input type="text" id="routine-title" placeholder="Ex: Estudo, Musculação, Trabalho..." required>
           </div>
           <div class="form-group">
             <label for="routine-icon">Ícone / Categoria:</label>
             <select id="routine-icon">
-              <option value="sparkles">✨ Geral / Especial</option>
               <option value="book-open">📚 Estudos</option>
               <option value="briefcase">💼 Trabalho</option>
               <option value="smile">😊 Lazer</option>
               <option value="gamepad-2">🎮 Hobbies</option>
               <option value="dumbbell">🏋️ Esportes</option>
               <option value="heart-pulse">❤️ Saúde</option>
+              <option value="sparkles">✨ Geral / Especial</option>
               <option value="coffee">☕ Manhã / Foco</option>
               <option value="moon">🌙 Noite / Sono</option>
             </select>
@@ -130,95 +70,41 @@
           </div>
           <div class="form-group">
             <label for="routine-items">Hábitos / Tarefas (separados por vírgula):</label>
-            <textarea id="routine-items" rows="3" placeholder="Ex: Beber café sem açúcar, Ler 10 páginas, 20min alongamento" required></textarea>
+            <textarea id="routine-items" rows="3" placeholder="Ex: Ler 20 págs, Praticar exercícios, Revisar matéria" required></textarea>
           </div>
           <button type="submit" class="btn-primary btn-block">Salvar Nova Rotina</button>
         </form>
-      </div>
-    </div>
-
-    <!-- Modais Padrões de Detalhes -->
-    <div id="modal-estudo" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-estudo')">&times;</span>
-        <h2><i data-lucide="book-open"></i> Rotina de Estudos</h2>
-        <hr>
-        <ul>
-          <li>📖 Leitura técnica (30 min)</li>
-          <li>💻 Prática de programação (1h30)</li>
-          <li>📝 Revisão de anotações diárias</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="modal-trabalho" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-trabalho')">&times;</span>
-        <h2><i data-lucide="briefcase"></i> Rotina de Trabalho</h2>
-        <hr>
-        <ul>
-          <li>📧 Resposta a e-mails prioritários</li>
-          <li>🚀 Planejamento de tarefas e projetos</li>
-          <li>📊 Revisão de KPIs e entregas</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="modal-lazer" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-lazer')">&times;</span>
-        <h2><i data-lucide="smile"></i> Rotina de Lazer</h2>
-        <hr>
-        <ul>
-          <li>🎬 Séries / Filmes à noite</li>
-          <li>🚶 Passeio ao ar livre</li>
-          <li>🎧 Ouvir podcasts ou música</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="modal-hobby" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-hobby')">&times;</span>
-        <h2><i data-lucide="gamepad-2"></i> Rotina de Hobbies</h2>
-        <hr>
-        <ul>
-          <li>🎨 Projetos autorais de design</li>
-          <li>🎮 Sessão de jogos no final de semana</li>
-          <li>🎸 Prática de instrumento musical</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="modal-esportes" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-esportes')">&times;</span>
-        <h2><i data-lucide="dumbbell"></i> Rotina de Esportes</h2>
-        <hr>
-        <ul>
-          <li>🏋️ Musculação / Treino de Força (1h)</li>
-          <li>🏃 Corrida ao ar livre (5km)</li>
-          <li>🧘 Alongamento e mobilidade</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="modal-saude" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('modal-saude')">&times;</span>
-        <h2><i data-lucide="heart-pulse"></i> Rotina de Saúde</h2>
-        <hr>
-        <ul>
-          <li>💧 Beber 3L de água por dia</li>
-          <li>🥗 Seguir plano alimentar balanceado</li>
-          <li>😴 Garantir 8 horas de sono contínuo</li>
-        </ul>
       </div>
     </div>
   </div>
 
   <!-- JavaScript Embutido -->
   <script>
+    // Rotinas Iniciais Padrão (Sem duplicar Estudos se você já tiver adicionado)
+    const defaultRoutines = [
+      {
+        id: 'routine-estudo-default',
+        title: 'Estudo',
+        icon: 'book-open',
+        desc: 'Desenvolvimento acadêmico, leitura e novos aprendizados.',
+        items: ['📖 Leitura técnica (30 min)', '💻 Prática e exercícios', '📝 Revisão de anotações']
+      },
+      {
+        id: 'routine-trabalho-default',
+        title: 'Trabalho',
+        icon: 'briefcase',
+        desc: 'Projetos profissionais, reuniões e metas diárias.',
+        items: ['📧 Resposta a e-mails', '🚀 Planejamento de tarefas', '📊 Revisão de entregas']
+      },
+      {
+        id: 'routine-esportes-default',
+        title: 'Esportes',
+        icon: 'dumbbell',
+        desc: 'Treinos físicos, alta performance e rotina de exercícios.',
+        items: ['🏋️ Musculação / Treino de Força', '🏃 Corrida ao ar livre', '🧘 Alongamento']
+      }
+    ];
+
     // Inicialização dos Ícones Lucide
     lucide.createIcons();
 
@@ -244,6 +130,44 @@
       }
     };
 
+    // Renderizar uma Rotina no DOM (Card + Modal)
+    function renderRoutine(r) {
+      // Criar Card
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${r.id}`;
+      card.innerHTML = `
+        <div class="card-icon"><i data-lucide="${r.icon}"></i></div>
+        <h3>${r.title}</h3>
+        <p>${r.desc}</p>
+        <div class="card-actions">
+          <button class="btn-primary" onclick="openModal('${r.id}')">Ver Detalhes</button>
+          <button class="btn-delete" title="Excluir Rotina" onclick="deleteRoutine('${r.id}')">
+            <i data-lucide="trash-2"></i>
+          </button>
+        </div>
+      `;
+      document.getElementById('cards-container').appendChild(card);
+
+      // Criar Modal
+      const modal = document.createElement('div');
+      modal.id = r.id;
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal('${r.id}')">&times;</span>
+          <h2><i data-lucide="${r.icon}"></i> ${r.title}</h2>
+          <hr>
+          <ul>
+            ${r.items.map(item => `<li>✨ ${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('modals-wrapper').appendChild(modal);
+
+      lucide.createIcons();
+    }
+
     // Criar Nova Rotina
     function createNewRoutine(event) {
       event.preventDefault();
@@ -258,88 +182,56 @@
       const routineId = 'modal-custom-' + Date.now();
       const itemsList = itemsRaw.split(',').map(item => item.trim()).filter(item => item.length > 0);
 
-      // Criar Novo Card HTML
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <div class="card-icon"><i data-lucide="${icon}"></i></div>
-        <h3>${title}</h3>
-        <p>${desc}</p>
-        <div class="card-actions">
-          <button class="btn-primary" onclick="openModal('${routineId}')">Ver Detalhes</button>
-        </div>
-      `;
-      document.getElementById('cards-container').appendChild(card);
+      const routineData = { id: routineId, title, icon, desc, items: itemsList };
 
-      // Criar Novo Modal HTML
-      const modal = document.createElement('div');
-      modal.id = routineId;
-      modal.className = 'modal';
-      modal.innerHTML = `
-        <div class="modal-content">
-          <span class="close-btn" onclick="closeModal('${routineId}')">&times;</span>
-          <h2><i data-lucide="${icon}"></i> ${title}</h2>
-          <hr>
-          <ul>
-            ${itemsList.map(item => `<li>✨ ${item}</li>`).join('')}
-          </ul>
-        </div>
-      `;
-      document.getElementById('modals-wrapper').appendChild(modal);
+      renderRoutine(routineData);
+      saveRoutine(routineData);
 
-      // Salvar no localStorage
-      saveCustomRoutine({ id: routineId, title, icon, desc, items: itemsList });
-
-      // Atualizar ícones renderizados
-      lucide.createIcons();
-
-      // Limpar formulário e fechar modal
       document.getElementById('form-new-routine').reset();
       closeModal('modal-add');
     }
 
+    // Excluir Rotina
+    function deleteRoutine(id) {
+      if (confirm('Tem certeza que deseja excluir esta rotina?')) {
+        // Remover Card e Modal do DOM
+        const card = document.getElementById(`card-${id}`);
+        const modal = document.getElementById(id);
+        if (card) card.remove();
+        if (modal) modal.remove();
+
+        // Atualizar localStorage
+        let routines = getSavedRoutines();
+        routines = routines.filter(r => r.id !== id);
+        localStorage.setItem('henry_routines', JSON.stringify(routines));
+      }
+    }
+
     // Persistência com localStorage
-    function saveCustomRoutine(routineData) {
-      const saved = JSON.parse(localStorage.getItem('henry_routines') || '[]');
-      saved.push(routineData);
-      localStorage.setItem('henry_routines', JSON.stringify(saved));
+    function getSavedRoutines() {
+      const saved = localStorage.getItem('henry_routines');
+      if (!saved) {
+        // Se for a primeira vez, salva os padrões no localStorage
+        localStorage.setItem('henry_routines', JSON.stringify(defaultRoutines));
+        return defaultRoutines;
+      }
+      return JSON.parse(saved);
     }
 
-    function loadCustomRoutines() {
-      const saved = JSON.parse(localStorage.getItem('henry_routines') || '[]');
-      saved.forEach(r => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="card-icon"><i data-lucide="${r.icon}"></i></div>
-          <h3>${r.title}</h3>
-          <p>${r.desc}</p>
-          <div class="card-actions">
-            <button class="btn-primary" onclick="openModal('${r.id}')">Ver Detalhes</button>
-          </div>
-        `;
-        document.getElementById('cards-container').appendChild(card);
-
-        const modal = document.createElement('div');
-        modal.id = r.id;
-        modal.className = 'modal';
-        modal.innerHTML = `
-          <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('${r.id}')">&times;</span>
-            <h2><i data-lucide="${r.icon}"></i> ${r.title}</h2>
-            <hr>
-            <ul>
-              ${r.items.map(item => `<li>✨ ${item}</li>`).join('')}
-            </ul>
-          </div>
-        `;
-        document.getElementById('modals-wrapper').appendChild(modal);
-      });
-      lucide.createIcons();
+    function saveRoutine(routineData) {
+      const routines = getSavedRoutines();
+      routines.push(routineData);
+      localStorage.setItem('henry_routines', JSON.stringify(routines));
     }
 
-    // Carregar rotinas personalizadas ao iniciar
-    window.addEventListener('DOMContentLoaded', loadCustomRoutines);
+    function loadRoutines() {
+      const routines = getSavedRoutines();
+      document.getElementById('cards-container').innerHTML = '';
+      routines.forEach(r => renderRoutine(r));
+    }
+
+    // Carregar rotinas ao iniciar
+    window.addEventListener('DOMContentLoaded', loadRoutines);
 
     // Script 3D com Three.js (Objetos voando no fundo)
     const scene = new THREE.Scene();
