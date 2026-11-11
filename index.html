@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Henry Workflows | Organizador de Rotinas</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Three.js para os Objetos 3D Voando no Fundo -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- CDN Estável do Three.js para o GitHub Pages -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <!-- CDN Estável dos Ícones Lucide -->
+  <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
 </head>
 <body>
 
@@ -34,7 +35,7 @@
 
   <!-- Container dos Cards de Rotinas -->
   <main class="cards-container" id="cards-container">
-    <!-- Os cards serão carregados dinamicamente aqui -->
+    <!-- Os cards são gerados dinamicamente via JS -->
   </main>
 
   <!-- Container Dinâmico de Modais -->
@@ -80,7 +81,7 @@
 
   <!-- JavaScript Embutido -->
   <script>
-    // Rotinas Iniciais Padrão (Sem duplicar Estudos se você já tiver adicionado)
+    // Rotinas Padrão Iniciais
     const defaultRoutines = [
       {
         id: 'routine-estudo-default',
@@ -105,32 +106,31 @@
       }
     ];
 
-    // Inicialização dos Ícones Lucide
-    lucide.createIcons();
+    // Atualiza os Ícones do Lucide com segurança
+    function renderIcons() {
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    }
 
-    // Funções de Modal
+    // Modal Helpers
     function openModal(id) {
       const modal = document.getElementById(id);
-      if (modal) {
-        modal.style.display = 'flex';
-      }
+      if (modal) modal.style.display = 'flex';
     }
 
     function closeModal(id) {
       const modal = document.getElementById(id);
-      if (modal) {
-        modal.style.display = 'none';
-      }
+      if (modal) modal.style.display = 'none';
     }
 
-    // Fechar modal ao clicar fora
     window.onclick = function(event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
       }
     };
 
-    // Renderizar uma Rotina no DOM (Card + Modal)
+    // Renderiza Card e Modal de uma Rotina
     function renderRoutine(r) {
       // Criar Card
       const card = document.createElement('div');
@@ -143,7 +143,7 @@
         <div class="card-actions">
           <button class="btn-primary" onclick="openModal('${r.id}')">Ver Detalhes</button>
           <button class="btn-delete" title="Excluir Rotina" onclick="deleteRoutine('${r.id}')">
-            <i data-lucide="trash-2"></i>
+            🗑️
           </button>
         </div>
       `;
@@ -165,7 +165,7 @@
       `;
       document.getElementById('modals-wrapper').appendChild(modal);
 
-      lucide.createIcons();
+      renderIcons();
     }
 
     // Criar Nova Rotina
@@ -194,24 +194,21 @@
     // Excluir Rotina
     function deleteRoutine(id) {
       if (confirm('Tem certeza que deseja excluir esta rotina?')) {
-        // Remover Card e Modal do DOM
         const card = document.getElementById(`card-${id}`);
         const modal = document.getElementById(id);
         if (card) card.remove();
         if (modal) modal.remove();
 
-        // Atualizar localStorage
         let routines = getSavedRoutines();
         routines = routines.filter(r => r.id !== id);
         localStorage.setItem('henry_routines', JSON.stringify(routines));
       }
     }
 
-    // Persistência com localStorage
+    // Gerenciamento de LocalStorage
     function getSavedRoutines() {
       const saved = localStorage.getItem('henry_routines');
       if (!saved) {
-        // Se for a primeira vez, salva os padrões no localStorage
         localStorage.setItem('henry_routines', JSON.stringify(defaultRoutines));
         return defaultRoutines;
       }
@@ -230,94 +227,96 @@
       routines.forEach(r => renderRoutine(r));
     }
 
-    // Carregar rotinas ao iniciar
-    window.addEventListener('DOMContentLoaded', loadRoutines);
-
-    // Script 3D com Three.js (Objetos voando no fundo)
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg3d'), alpha: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    const objects = [];
-    const geometryList = [
-      new THREE.CylinderGeometry(0.1, 0.1, 2, 8),
-      new THREE.BoxGeometry(1, 1.3, 0.3),
-      new THREE.TorusGeometry(0.8, 0.2, 16, 100),
-      new THREE.IcosahedronGeometry(0.8)
-    ];
-
-    const materialBlue = new THREE.MeshPhongMaterial({
-      color: 0x0070f3,
-      emissive: 0x001133,
-      specular: 0xffffff,
-      shininess: 100,
-      flatShading: true
+    window.addEventListener('DOMContentLoaded', () => {
+      loadRoutines();
+      init3D();
     });
 
-    const materialWhite = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      emissive: 0x222222,
-      specular: 0xffffff,
-      shininess: 80,
-      flatShading: true
-    });
+    // Animação 3D com Three.js
+    function init3D() {
+      if (typeof THREE === 'undefined') return;
 
-    for (let i = 0; i < 40; i++) {
-      const geom = geometryList[Math.floor(Math.random() * geometryList.length)];
-      const mat = Math.random() > 0.4 ? materialBlue : materialWhite;
-      const mesh = new THREE.Mesh(geom, mat);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg3d'), alpha: true });
 
-      mesh.position.x = (Math.random() - 0.5) * 30;
-      mesh.position.y = (Math.random() - 0.5) * 30;
-      mesh.position.z = (Math.random() - 0.5) * 30;
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
 
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
+      const objects = [];
+      const geometryList = [
+        new THREE.CylinderGeometry(0.1, 0.1, 2, 8),
+        new THREE.BoxGeometry(1, 1.3, 0.3),
+        new THREE.TorusGeometry(0.8, 0.2, 16, 100),
+        new THREE.IcosahedronGeometry(0.8)
+      ];
 
-      mesh.userData = {
-        rotSpeedX: (Math.random() - 0.5) * 0.02,
-        rotSpeedY: (Math.random() - 0.5) * 0.02,
-        floatSpeed: (Math.random() - 0.5) * 0.015
-      };
-
-      scene.add(mesh);
-      objects.push(mesh);
-    }
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(0x0070f3, 2, 50);
-    pointLight.position.set(10, 10, 10);
-    scene.add(pointLight);
-
-    const whiteLight = new THREE.PointLight(0xffffff, 1.5, 50);
-    whiteLight.position.set(-10, -10, 10);
-    scene.add(whiteLight);
-
-    camera.position.z = 15;
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      objects.forEach(obj => {
-        obj.rotation.x += obj.userData.rotSpeedX;
-        obj.rotation.y += obj.userData.rotSpeedY;
-        obj.position.y += Math.sin(Date.now() * 0.001 + obj.position.x) * obj.userData.floatSpeed;
+      const materialBlue = new THREE.MeshPhongMaterial({
+        color: 0x0070f3,
+        emissive: 0x001133,
+        specular: 0xffffff,
+        shininess: 100,
+        flatShading: true
       });
 
-      renderer.render(scene, camera);
-    }
-    animate();
+      const materialWhite = new THREE.MeshPhongMaterial({
+        color: 0xffffff,
+        emissive: 0x222222,
+        specular: 0xffffff,
+        shininess: 80,
+        flatShading: true
+      });
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
-</body>
-</html>
+      for (let i = 0; i < 35; i++) {
+        const geom = geometryList[Math.floor(Math.random() * geometryList.length)];
+        const mat = Math.random() > 0.4 ? materialBlue : materialWhite;
+        const mesh = new THREE.Mesh(geom, mat);
+
+        mesh.position.x = (Math.random() - 0.5) * 30;
+        mesh.position.y = (Math.random() - 0.5) * 30;
+        mesh.position.z = (Math.random() - 0.5) * 30;
+
+        mesh.rotation.x = Math.random() * Math.PI;
+        mesh.rotation.y = Math.random() * Math.PI;
+
+        mesh.userData = {
+          rotSpeedX: (Math.random() - 0.5) * 0.02,
+          rotSpeedY: (Math.random() - 0.5) * 0.02,
+          floatSpeed: (Math.random() - 0.5) * 0.015
+        };
+
+        scene.add(mesh);
+        objects.push(mesh);
+      }
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+
+      const pointLight = new THREE.PointLight(0x0070f3, 2, 50);
+      pointLight.position.set(10, 10, 10);
+      scene.add(pointLight);
+
+      const whiteLight = new THREE.PointLight(0xffffff, 1.5, 50);
+      whiteLight.position.set(-10, -10, 10);
+      scene.add(whiteLight);
+
+      camera.position.z = 15;
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        objects.forEach(obj => {
+          obj.rotation.x += obj.userData.rotSpeedX;
+          obj.rotation.y += obj.userData.rotSpeedY;
+          obj.position.y += Math.sin(Date.now() * 0.001 + obj.position.x) * obj.userData.floatSpeed;
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
